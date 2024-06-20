@@ -1,0 +1,43 @@
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////
+                              START SECTION 7 - THE PORTFOLIO  
+//////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+<section id="portfolio" class="portfolio">
+  <div class="container">
+    <div class="row text-center mt-5">
+      <h1 class="display-3 fw-bold text-capitalize">Latest work</h1>
+      <div class="heading-line"></div>
+      <p class="lead">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint porro temporibus distinctio.
+      </p>
+    </div>
+    <!-- FILTER BUTTONS  -->
+    <div class="row mt-5 mb-4 g-3 text-center">
+      <div class="col-md-12">
+        <button class="btn btn-outline-primary" type="button">All</button>
+        <button class="btn btn-outline-primary" type="button">websites</button>
+        <button class="btn btn-outline-primary" type="button">design</button>
+        <button class="btn btn-outline-primary" type="button">mockup</button>
+      </div>
+    </div>
+
+    <!-- START THE PORTFOLIO ITEMS  -->
+    <div class="row">
+      {{#each rows}}
+      <div class="col-lg-4 col-md-6">
+        <div class="portfolio-box shadow">
+          <img src="client-assets/images/portfolio/portfolio-1.jpg" alt="portfolio 1 image" title="portfolio 1 picture" class="img-fluid">
+          <div class="portfolio-info">
+            <div class="caption">
+              <h4>{{this.port_title}}</h4>
+              <p>{{this.port_text}}</p>
+              <a href="view-add-portfolio" type="submit" class="btn btn-warning">Insert</a>
+              <a href="view-update-portfolio/{{this.port_id}}" type="submit" class="btn btn-primary">Update</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</section>

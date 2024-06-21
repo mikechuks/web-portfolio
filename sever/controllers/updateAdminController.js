@@ -181,7 +181,7 @@ exports.update_ex = [
               comImg = `images/${req.file.filename}`;
              // Delete the old image if it exists
              if (currentImage) {
-              const oldImagePath = path.join(__dirname, '..', '..', 'uploads', path.basename(currentImage));
+              const oldImagePath = path.join(__dirname, '..', '..', 'images', path.basename(currentImage));
               console.log('Old Image Path:', oldImagePath);
       
               if (fs.existsSync(oldImagePath)) {
@@ -238,7 +238,7 @@ exports.update_tes = [
                    tesImg = `images/${req.file.filename}`;
                   // Delete the old image if it exists
                   if (currentImage) {
-                   const oldImagePath = path.join(__dirname, '..', '..', 'uploads', path.basename(currentImage));
+                   const oldImagePath = path.join(__dirname, '..', '..', 'images', path.basename(currentImage));
                    console.log('Old Image Path:', oldImagePath);
            
                    if (fs.existsSync(oldImagePath)) {
@@ -274,14 +274,14 @@ exports.update_port = [
   update_port_upload,
   body('portTitle').notEmpty().withMessage('Name is required'),
   body('portTes').notEmpty().withMessage('Name is required'),
-  body('portImgDes').notEmpty().withMessage('Name is required'),
+  body('portUrl').notEmpty().withMessage('Name is required'),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.render('update-portfolio', {layout: 'admin-layout', errors: errors.array(), id: req.body.id, portTitle: req.body.portTitle, portTes: req.body.portTes, portImg: req. body.portImg, portImgDes: req. body.portImgDes});
+      return res.render('update-portfolio', {layout: 'admin-layout', errors: errors.array(), id: req.body.id, portTitle: req.body.portTitle, portTes: req.body.portTes, portImg: req. body.portImg, portImgDes: req. body.portUrl});
     }
 
-    const {id, portTitle, portTes, portImgDes, } = req.body;
+    const {id, portTitle, portTes, portUrl, } = req.body;
 
     try {
             // Retrieve the current image path from the database
@@ -294,7 +294,7 @@ exports.update_port = [
               portImg = `images/${req.file.filename}`;
              // Delete the old image if it exists
              if (currentImage) {
-              const oldImagePath = path.join(__dirname, '..', '..', 'uploads', path.basename(currentImage));
+              const oldImagePath = path.join(__dirname, '..', '..', 'images', path.basename(currentImage));
               console.log('Old Image Path:', oldImagePath);
       
               if (fs.existsSync(oldImagePath)) {
@@ -311,8 +311,8 @@ exports.update_port = [
             }
           }
 
-      const query ='UPDATE portfolio SET port_title = ?, port_text = ?, port_img = ?, port_img_des = ? WHERE port_id = ?';
-      const [results] = await pool.execute(query, [portTitle, portTes, portImg, portImgDes, id]);
+      const query ='UPDATE portfolio SET port_title = ?, port_text = ?, port_img = ?, port_url = ? WHERE port_id = ?';
+      const [results] = await pool.execute(query, [portTitle, portTes, portImg, portUrl, id]);
 
        // Fetch the updated row to confirm the update or display updated data
       const [rows] = await pool.execute('SELECT * FROM portfolio WHERE port_id = ?', [id]);

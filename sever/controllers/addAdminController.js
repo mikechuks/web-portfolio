@@ -15,7 +15,7 @@ const pool = mysql.createPool({
 
 // Set storage engine
 const storage = multer.diskStorage({
-  destination: './uploads/',
+  destination: 'public/images/',
   filename: function(req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
@@ -112,7 +112,7 @@ exports.add_ex = [
       return res.render('add-experience', {layout:'admin-layout', msg: 'Company image is required' });
     }
 
-    const cImage = `uploads/${req.file.filename}`
+    const cImage = `images/${req.file.filename}`
   
       try {
         const query = 'INSERT INTO pro_experience(company_name, company_image, experience_details) VALUES (?, ?, ?)';
@@ -147,7 +147,7 @@ exports.add_tes =[
       return res.render('add-testimonies', {layout:'admin-layout', msg: 'Testimony image is required' });
     }
 
-    const tesImg = `uploads/${req.file.filename}`
+    const tesImg = `images/${req.file.filename}`
   
       try {
         const query = 'INSERT INTO testimony (testimony_header, testimony_details, testimony_image, testimony_name, testimony_proffession) VALUES (?, ?, ?, ?, ?)';
@@ -181,7 +181,7 @@ exports.add_port = [
       return res.render('add-portfolio', {layout:'admin-layout', msg: 'portfolio image is required' });
     }
 
-    const CImage = `uploads/${req.file.filename}`
+    const CImage = `images/${req.file.filename}`
   
       try {
         const query = 'INSERT INTO portfolio (port_title, port_text, port_img, port_img_des) VALUES (?, ?, ?, ?)';

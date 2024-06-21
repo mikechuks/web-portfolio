@@ -16,7 +16,7 @@ const pool = mysql.createPool({
 
 // Set storage engine
 const storage = multer.diskStorage({
-  destination: './uploads/',
+  destination: 'public/images/',
   filename: function(req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
@@ -95,10 +95,10 @@ exports.update_first_item1 = [
       // If a new image is uploaded, update the image path and delete the old image
       let HImage = currentImage;
       if (req.file) {
-        HImage = `uploads/${req.file.filename}`;
+        HImage = `images/${req.file.filename}`;
        // Delete the old image if it exists
        if (currentImage) {
-        const oldImagePath = path.join(__dirname, '..', '..', 'uploads', path.basename(currentImage));
+        const oldImagePath = path.join(__dirname, '..', '..', 'public/uploads', path.basename(currentImage));
         console.log('Old Image Path:', oldImagePath);
 
         if (fs.existsSync(oldImagePath)) {
@@ -178,7 +178,7 @@ exports.update_ex = [
             // If a new image is uploaded, update the image path and delete the old image
             let comImg = currentImage;
             if (req.file) {
-              comImg = `uploads/${req.file.filename}`;
+              comImg = `images/${req.file.filename}`;
              // Delete the old image if it exists
              if (currentImage) {
               const oldImagePath = path.join(__dirname, '..', '..', 'uploads', path.basename(currentImage));
@@ -235,7 +235,7 @@ exports.update_tes = [
                  // If a new image is uploaded, update the image path and delete the old image
                  let tesImg = currentImage;
                  if (req.file) {
-                   tesImg = `uploads/${req.file.filename}`;
+                   tesImg = `images/${req.file.filename}`;
                   // Delete the old image if it exists
                   if (currentImage) {
                    const oldImagePath = path.join(__dirname, '..', '..', 'uploads', path.basename(currentImage));
@@ -291,7 +291,7 @@ exports.update_port = [
             // If a new image is uploaded, update the image path and delete the old image
             let portImg = currentImage;
             if (req.file) {
-              portImg = `uploads/${req.file.filename}`;
+              portImg = `images/${req.file.filename}`;
              // Delete the old image if it exists
              if (currentImage) {
               const oldImagePath = path.join(__dirname, '..', '..', 'uploads', path.basename(currentImage));

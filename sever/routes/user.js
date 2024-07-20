@@ -34,4 +34,8 @@ router.post('/update-skills', updateAdminController.update_skills);
 router.post('/update-first-item', updateAdminController.update_first_item1);
 router.post('/update-portfolio', updateAdminController.update_port);
 
+//Send Mail
+router.post('/contact-me', userController.send_email);
+
+
 module.exports = router;

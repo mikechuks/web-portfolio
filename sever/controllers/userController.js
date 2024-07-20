@@ -1,10 +1,11 @@
 const mysql = require('mysql2/promise');
+const nodemailer = require('nodemailer');
 // const { body, validationResult } = require('express-validator');
 // const mysql2 = require('mysql2');
 
 //Connection Pool
 const pool = mysql.createPool({
-    connectionLimit: 100,
+    connectionLimit: 10,
     host           : process.env.DB_HOST,
     user           : process.env.DB_USER,
     password       : process.env.DB_PASS,
@@ -306,3 +307,35 @@ exports.view_update_port = async (req, res) => {
       if (connection) connection.release();
     }
   };
+
+  //Send Email
+exports.send_email = async (req, res) => {
+  const { fname, lname, email, message } = req.body;
+
+    // Create a transporter
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+        }
+    });
+
+    // Setup email data
+    let mailOptions = {
+        from: `"${fname}" <${email}>`,
+        to: process.env.EMAIL_USER, // Your email address to receive the contact form data
+        subject: 'Contact Form Submission',
+        text: `You have received a new message from ${fname} ${lname} (${email}):\n\n${message}`
+    };
+
+    // Send mail
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Something went wrong. Please try again later.');
+        }
+        console.log('Message sent: %s', info.messageId);
+        res.send('Your message has been sent successfully!');
+    });
+};
